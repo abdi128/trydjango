@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+
+{% block content %}
+    <h1>Title: {{title}}</h1>
+    <h2>ID: {{id}}</h2>
+    <h3>Content: {{content}}</h3>
+    <ul>
+        {% for x in my_list %}
+        <li>Index {{ forloop.counter0 }} is: {{ x }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
