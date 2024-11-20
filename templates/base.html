@@ -6,10 +6,25 @@
     <title>{% block title %} 
                 Base
             {% endblock %}</title>
+    <style>
+        .success {
+            color: green;
+        }
+        .error {
+            color: red;
+        }
+    </style>
 </head>
-<body>
+<body><br><br>
+    <h1>Welcome</h1>
+    <form action="{% url 'search' %}">
+        <input type="text" name="q" id="query"/>
+        <input type="submit" value="Search"/>
+    </form>
+    <hr>
+    <br>
     {%block content %}
-    
+
     {% endblock %}
 </body>
 </html>

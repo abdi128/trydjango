@@ -5,13 +5,15 @@
 {% endblock %}
 
 
-{% block content %}
-    <h1>Title: {{title}}</h1>
-    <h2>ID: {{id}}</h2>
-    <h3>Content: {{content}}</h3>
-    <ul>
-        {% for x in my_list %}
-        <li>Index {{ forloop.counter0 }} is: {{ x }}</li>
+{% block content %}<br> 
+    {% if messages %}
+    {% for message in messages %}
+        <h2 class="{{ message.tags }}">{{ message }}</h2>
+    {% endfor %}
+    {% endif %}
+    <br>
+        {% for article in article_all %}
+            <a href="{% url 'articles' article.id %}"><h2>Object {{ article.id }}: {{ article.title }}</h2></a>
+            <hr>
         {% endfor %}
-    </ul>
 {% endblock %}

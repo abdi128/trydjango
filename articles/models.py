@@ -5,5 +5,5 @@ class Article(models.Model):
     content = models.TextField()
 
     def __str__(self):
-        return f"{self.title} {self.content}"
+        return f"{self.id} {self.title}"
 

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+
+{% block content %}<br>
+<div>
+    {% if messages %}
+        {% for message in messages %}
+            <h2 class="{{ message.tags }}">{{ message }}</h2>
+        {% endfor %}
+    {% endif %}
+</div>
+<br>
+{% if not request.user.is_authenticated %}
+    <form method="POST" action="">
+        {% csrf_token %}
+        <input type="text" name="identifier" placeholder="Username or Email" required /><br><br>
+        <input type="password" name="password" placeholder="Password" required /><br><br>
+        <button type="submit">Login</button>
+    </form>
+{% else %}
+    <div>
+        <h2>You are already logged in, would you like to logout</h2><br>
+        <a href="{% url 'logout' %}" style="margin: 3em; border: 1px solid black; padding: 1em 3em; text-decoration: none;">Logout</a>
+    </div>
+{% endif %}
+{% endblock %}
