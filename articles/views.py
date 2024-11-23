@@ -12,11 +12,11 @@ def home(request):
 
     article_all = Article.objects.all()
 #    my_list = [23, 234, 325, 3526, 666, 77, 232]
-    context = { 'article_all':article_all }
+    context = { 'article_all':article_all, "user": request.user }
 
     ttemplates = render_to_string("home.html", context=context)
 #   HTML_TEST= "<h1>Title: {title}</h1><h2>ID: {id}</h2><h3>Content: {content}</h3>".format(**context)
-    return HttpResponse(ttemplates)
+    return render(request, "home.html", context)
 
 
 def articles(request, pk):
@@ -47,13 +47,12 @@ def article_search_view(request):
 
 @login_required
 def create(request):
-    form = ArticleForm()
-    if request.method == 'POST':
-        form = ArticleForm(request.POST)
-        if form.is_valid():
-            title = form.cleaned_data.get('title')
-            content = form.cleaned_data.get('content')
-            new_article = Article.objects.create(title=title, content=content)
-            return redirect('home')
+    form = ArticleForm(request.POST or None)
+    if form.is_valid():
+        new_article = form.save()
+        """title = form.cleaned_data.get('title')
+        content = form.cleaned_data.get('content')
+        new_article = Article.objects.create(title=title, content=content)"""
+        return redirect('home')
     
-    return render(request, 'articles/create.html',{ 'form': form })
+    return render(request, 'articles/create.html', { 'form': form })

@@ -7,13 +7,16 @@
 
 {% block content %}<br> 
     {% if messages %}
-    {% for message in messages %}
-        <h2 class="{{ message.tags }}">{{ message }}</h2>
-    {% endfor %}
+        {% for message in messages %}
+            <h2 class="{{ message.tags }}">{{ message }}</h2>
+        {% endfor %}
+        <br>
     {% endif %}
-    <br>
+    
+    
         {% for article in article_all %}
             <a href="{% url 'articles' article.id %}"><h2>Object {{ article.id }}: {{ article.title }}</h2></a>
             <hr>
         {% endfor %}
+        <br><br>
 {% endblock %}

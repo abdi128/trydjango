@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+
+{% block content %}<br><br>
+<div>
+    {% if messages %}
+        {% for message in messages %}
+            <h2 class="{{ message.tags }}">{{ message }}</h2>
+        {% endfor %}
+    {% endif %}
+</div>
+    {% if not request.user.is_authenticated %}
+    <form method="POST">
+        {% csrf_token %}
+        
+        {{ form.as_p }}
+        <button type="submit">Register</button>
+    </form>
+    <div>
+        <h2>Already have an account, would you like to Login</h2><br>
+        <a href="{% url 'login' %}" style="margin: 3em; border: 1px solid black; padding: 1em 3em; text-decoration: none;">Login</a>
+    </div>
+    {% else %}
+    <div>
+        <h2>You are already Registered, would you like to Login</h2><br>
+        <a href="{% url 'login' %}" style="margin: 3em; border: 1px solid black; padding: 1em 3em; text-decoration: none;">Login</a>
+    </div>
+    {% endif %}
+{% endblock %}
