@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Home
+    List
 {% endblock %}
 
 
@@ -13,9 +13,10 @@
         <br>
     {% endif %}
     
-    
-        {% for article in article_all %}
-            <a href="{{ article.get_absolute_url }}"><h2>Object {{ article.id }}: {{ article.title }}</h2></a>
+    <a href="{% url 'recipe-create' %}"><h3>Create Recipe</h3></a><br>
+
+        {% for object in object_list %}
+            <a href="{% url 'recipe-detail' id=object.id %}"><h2>Recipe {{ object.id }}: {{ object.name }}</h2></a>
             <hr>
         {% endfor %}
         <br><br>

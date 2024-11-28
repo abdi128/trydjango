@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Create
+{% endblock %}
+
+
+{% block content %}<br>
+    {% if messages %}
+    {% for message in messages %}
+        <h2 class="{{ message.tags }}">{{ message }}</h2>
+    {% endfor %}
+    <br>
+    {% endif %}
+<br>
+    <form method="POST">
+        {% csrf_token %}
+        
+        {{ form.as_p }}
+        <button type="submit">Create</button>
+    </form>
+{% endblock %}

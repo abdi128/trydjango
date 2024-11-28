@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Detail
+{% endblock %}
+
+
+{% block content %}<br>
+    {% if messages %}
+    {% for message in messages %}
+        <h2 class="{{ message.tags }}">{{ message }}</h2>
+    {% endfor %}
+    <br>
+    {% endif %}
+<br>
+    <h1>Recipe&nbsp;&nbsp;--<a href="{% url 'recipe-update' id=object.id %}">Edit</a></h1><br>
+    <h2>Name: {{ object.name }}</h2>
+    <p>Description: {{ object.description }}</p>
+    <p>Directions: {{ object.directions }}</p>
+
+    <br><h2>Ingredients</h2>
+    {% for ingredient in object.recipeingredient_set.all %}
+        <h3>Name: {{ ingredient.name }}</h3>
+        <p>As Metric: {{ ingredient.as_mks }}</p>
+        <p>As Imperial: {{ ingredient.as_imperial }}</p>
+    {% endfor %}
+{% endblock %}

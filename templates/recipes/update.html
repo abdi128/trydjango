@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Update
+{% endblock %}
+
+
+{% block content %}<br>
+    {% if messages %}
+    {% for message in messages %}
+        <h2 class="{{ message.tags }}">{{ message }}</h2>
+    {% endfor %}
+    <br>
+    {% endif %}
+<br>
+    <form method="POST">
+        {% csrf_token %}
+        
+        {{ form.as_p }}
+
+        {% if form_2 %}
+            {{ form_2.as_p}}
+        {% endif %}
+        <button type="submit">Update</button>
+    </form>
+{% endblock %}

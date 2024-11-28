@@ -18,9 +18,11 @@ from django.contrib import admin
 from django.urls import path, include
 from articles import urls as articles_urls
 from accounts import urls as accounts_urls
+from recipes import urls as recipes_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(articles_urls)),
     path('', include(accounts_urls)),
+    path('', include(recipes_urls)),
 ]

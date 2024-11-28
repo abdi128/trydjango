@@ -6,8 +6,21 @@
 
 
 {% block content %}
-            <h1>Title: {{ article.title }}</h1>
-            <h2>ID: {{ article.id }}</h2>
-            <h3>Content: {{ article.content }}</h3>
-            <hr>
+    {% if result != 0 %}
+        <h4 style="color: green;">{{ result }} results found</h4>
+    {% else %}
+        <h4 style="color: red;">No results found</h4>
+    {% endif %}
+    <br>
+
+    <ol>
+        {% for article in articles %}
+            {% if article.title %}
+            
+                <li>
+                    <h4><a href="{{ article.get_absolute_url }}">Title: {{ article.title }}</a></h4>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ol>
 {% endblock %}

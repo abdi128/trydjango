@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from articles.models import Article
 from django.template.loader import render_to_string
 from django.shortcuts import render, redirect
@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 import random
 from articles.forms import ArticleForm
+from django.db.models import Q
 
 
 def home(request):
@@ -19,13 +20,16 @@ def home(request):
     return render(request, "home.html", context)
 
 
-def articles(request, pk):
+def articles(request, pk=None):
     article = None
-
     if pk is not None:
-        article = Article.objects.get(id=pk)
-        context = { 'article':article }
-
+        try:
+            article = Article.objects.get(slug=pk)
+        except:
+            """messages.error(request, f"This url: \"http://127.0.0.1:8000/articles/{pk}\"  doesn\'t exist")
+            return redirect('home')"""
+            raise Http404
+    context = { 'article':article }
     return render(request, 'articles/article.html', context)
 
 
@@ -33,10 +37,16 @@ def articles(request, pk):
 def article_search_view(request):
     query = request.GET.get('q')
 
+    qs = Article.objects.all()
+    result = 0
+
     if query is not None:
         try:
-            article = Article.objects.get(id=int(query))
-            return render(request, 'articles/search.html', { 'article':article })
+            #lookups = Q(title__icontains=query) #| Q(content__icontains=query) 
+            #qs = Article.objects.filter(lookups)
+            qs = Article.objects.search(query)
+            result = qs.count()
+            return render(request, 'articles/search.html', { 'articles':qs, 'result':result })
         
         except(ValueError, Article.DoesNotExist):
             return redirect('home')
